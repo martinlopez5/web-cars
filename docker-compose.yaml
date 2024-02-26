@@ -1,14 +1,6 @@
 version: '3.8'
-services:
-  frontend:
-    build:
-      context: ./frontend-cars
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
 
+services:
   backend:
     build:
       context: ./backend-cars
@@ -16,18 +8,17 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - ./backend-cars:/app
+      - ./backend-cars:/usr/src/app
     environment:
       - NODE_ENV=development
-    depends_on:
-      - mongo
+    restart: on-failure
 
-  mongo:
-    image: mongo
+  frontend:
+    build:
+      context: ./frontend-cars
+      dockerfile: Dockerfile
     ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-
-volumes:
-  mongo-data:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: on-failure
