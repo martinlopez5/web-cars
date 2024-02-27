@@ -31,11 +31,11 @@ app.listen(PORT, () => {
 app.get('/api/manufacturer/:brand',cors(corsOptions), (req, res) => {
   // Extract the brand from the request parameters
   const { brand } = req.params;
-  console.log('rodriguez: ',carData)
+//  console.log('rodriguez: ',carData)
 
   // Find the car models for the given brand
   const models = carData[brand.toLowerCase()];
-  console.log('sebita: ',models)
+//  console.log('sebita: ',models)
 
   // If models exist for the brand, send them back in the response
   if (models) {
