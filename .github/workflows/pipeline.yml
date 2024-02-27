@@ -2,7 +2,7 @@ name: Continuous Integration and Docker Push
 
 on:
   push:
-    branches: [ test-ci ]
+    branches: [ test-ci-cd ]
     paths:
       - 'frontend-cars/**'
       - 'backend-cars/**'
