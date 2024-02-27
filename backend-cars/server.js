@@ -23,19 +23,17 @@ app.get('/', (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+    // console.log(`Server running on port ${PORT}`);
+// });
 
   
 app.get('/api/manufacturer/:brand',cors(corsOptions), (req, res) => {
   // Extract the brand from the request parameters
   const { brand } = req.params;
-//  console.log('rodriguez: ',carData)
 
   // Find the car models for the given brand
   const models = carData[brand.toLowerCase()];
-//  console.log('sebita: ',models)
 
   // If models exist for the brand, send them back in the response
   if (models) {
@@ -45,5 +43,12 @@ app.get('/api/manufacturer/:brand',cors(corsOptions), (req, res) => {
     res.status(404).json({ message: 'No models found for this brand' });
   }
 });
+
+if (require.main === module) {
+  // Only start the server if this file is run directly (not required as a module)
+  app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+  });
+}
 
 module.exports = app;
