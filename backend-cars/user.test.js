@@ -1,8 +1,8 @@
 const request = require('supertest');
-const app = require('../app'); // Import your Express app
+const app = require('./server.js'); // Import your Express app
 
-describe('GET /users', () => {
-    it('responds with an array of users', async () => {
+describe('GET /api/manufacturer/renault', () => {
+    it('responds with a 200 status ok', async () => {
         const response = await request(app).get('/api/manufacturer/renault');
         expect(response.statusCode).toBe(200);
         expect(response.body).toBeInstanceOf(Object);

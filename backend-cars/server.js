@@ -28,20 +28,22 @@ app.listen(PORT, () => {
 });
 
   
-  app.get('/api/manufacturer/:brand',cors(corsOptions), (req, res) => {
-    // Extract the brand from the request parameters
-    const { brand } = req.params;
-    console.log('rodriguez: ',carData)
-  
-    // Find the car models for the given brand
-    const models = carData[brand.toLowerCase()];
-    console.log('sebita: ',models)
-  
-    // If models exist for the brand, send them back in the response
-    if (models) {
-      res.json({ models });
-    } else {
-      // If no models found, send a 404 response
-      res.status(404).json({ message: 'No models found for this brand' });
-    }
-  });
+app.get('/api/manufacturer/:brand',cors(corsOptions), (req, res) => {
+  // Extract the brand from the request parameters
+  const { brand } = req.params;
+  console.log('rodriguez: ',carData)
+
+  // Find the car models for the given brand
+  const models = carData[brand.toLowerCase()];
+  console.log('sebita: ',models)
+
+  // If models exist for the brand, send them back in the response
+  if (models) {
+    res.json({ models });
+  } else {
+    // If no models found, send a 404 response
+    res.status(404).json({ message: 'No models found for this brand' });
+  }
+});
+
+module.exports = app;

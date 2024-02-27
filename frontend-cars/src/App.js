@@ -5,13 +5,13 @@ import './App.css'; // Make sure this path is correct
 // Home component that displays the search bar and manufacturer links
 const Home = () => (
   <div className="home">
-    <h1>TÍTULO PÁGINA PRINCIPAL</h1>
+    <h1>AUTOS ARGENTINA</h1>
     <div className="search-bar">
       <input type="text" placeholder="Type the model you are looking for" />
       <button>Search</button>
     </div>
     <div className="manufacturers">
-      {['RENAULT', 'VOLKSWAGEN', 'FIAT', 'CHEVROLET', 'FORD', 'PEUGEOT', 'BMW', 'MERCEDEZ BENZ', 'AUDI', 'MOTOS'].map(brand => (
+      {['RENAULT', 'VOLKSWAGEN', 'FIAT', 'CHEVROLET', 'FORD', 'PEUGEOT', 'BMW', 'MERCEDES BENZ', 'AUDI', 'MOTOS'].map(brand => (
         <a key={brand} href={`/manufacturer/${brand.toLowerCase()}`} className="manufacturer-box">
           {brand}
         </a>
