@@ -73,6 +73,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-            context: "{{defaultContext}}:frontend-cars"
+            context: ./frontend-cars
             push: true
             tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend-cars:${{ github.run_number }}
