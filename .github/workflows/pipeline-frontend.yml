@@ -1,0 +1,78 @@
+name: CI-frontend
+
+on:
+  push:
+    branches: [ test-ci-cd ]
+    paths:
+      - 'frontend-cars/**'
+
+
+jobs:
+  hadolint:
+    runs-on: ubuntu-latest
+    name: Lint Dockerfiles
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Run Hadolint
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: frontend-cars/Dockerfile
+
+  test-frontend:
+    needs: hadolint
+    runs-on: ubuntu-latest
+    name: Test Frontend
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        run: npm install
+        working-directory: ./frontend-cars
+
+      - name: Run frontend tests
+        run: npm test
+        working-directory: ./frontend-cars
+
+  # vulnerability-scan:
+    # needs: [test-backend, test-frontend]
+    # runs-on: ubuntu-latest
+    # name: Security Scanning
+    # steps:
+      # - name: Check out code
+        # uses: actions/checkout@v4
+# 
+      # - name: Run Snyk to check for vulnerabilities
+        # uses: snyk/actions/node@master
+        # with:
+          # command: test
+        # env:
+          # SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+  build-and-push:
+    needs: [test-frontend]
+    runs-on: ubuntu-latest
+    name: Build and Push Docker images
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+            context: "{{defaultContext}}:frontend-cars"
+            push: true
+            tags: ${{ secrets.DOCKERHUB_USERNAME }}/frontend-cars:${{ github.run_number }}
